@@ -32,6 +32,7 @@ public class HomeController {
 	
 	@RequestMapping(value="/bank", method=RequestMethod.POST)
 	public @ResponseBody Stack<HashMap<String, Object>> bank(HttpServletRequest request){
+		request.getSession().invalidate();
 		String account = request.getParameter("account");
 		String id = request.getParameter("id").toUpperCase();
 		String password = request.getParameter("password");
@@ -58,7 +59,6 @@ public class HomeController {
 					.execute();
 			Document document = response.parse();
 			Elements trs = document.select("tr[align]");
-			System.out.println(document);
 			for(Element tr: trs) {
 				Elements tds = tr.getElementsByTag("td");
 				HashMap<String, Object> transfer = new HashMap<String, Object>();
